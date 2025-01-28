@@ -6,6 +6,9 @@ on:
     branches:
       - main
       - "prateek/**"
+    push:
+      - main
+      - "prateek/**"
 jobs:
   creates_build:
     runs-on: self-hosted
@@ -15,7 +18,4 @@ jobs:
         with:
           node-version: "20"
       - run: yarn install
-      - run: yarn build:ci
-        env:
-          CI: ""
-      #
+      - run: CI=false yarn build
