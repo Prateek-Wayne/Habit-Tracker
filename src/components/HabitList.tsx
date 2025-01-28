@@ -12,6 +12,21 @@ import {
 const HabitList = () => {
   const { habits, deleteHabit, updateHabit } = useHabitStore();
   const today = new Date().toISOString().split("T")[0];
+
+  const getStreak = (habit: Habit) => {
+    let streak = 0;
+    const currentDate = new Date();
+    while (true) {
+      const dateString = currentDate.toISOString().split("T")[0];
+      if (habit.completedDates.includes(dateString)) {
+        streak++;
+        currentDate.setDate(currentDate.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+    return streak;
+  };
   return (
     <Grid container spacing={2} justifyContent="center">
       {habits.length === 0 ? (
