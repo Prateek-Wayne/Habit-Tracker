@@ -13,12 +13,17 @@ interface HabitStore{
     habits:Habit[];
     addHabit:(name:string,frequency:"daily"|"weekly")=>void;
     deleteHabit:(id:string)=>void;
-    updateHabit:(id:string,date:string)=>void
+    updateHabit:(id:string,date:string)=>void,
+    fetchHabits:()=>Promise<void>
+    isLoading: boolean;
+    error:string|null;
 }
 
 const useHabitStore=create<HabitStore>()(persist(((set,get)=>{
     return {
         habits:[],
+        isLoading:false,
+        error:null,
         addHabit:(name,frequency)=>{
             set((state)=>{
                 return{
@@ -50,6 +55,42 @@ const useHabitStore=create<HabitStore>()(persist(((set,get)=>{
                     habit.id===id?{...habit,completedDates:habit.completedDates.includes(date)?habit.completedDates.filter((d)=>d!==date):[...habit.completedDates,date]}  :habit)
                 }
             })
+        },
+        fetchHabits:async()=>{
+            set({isLoading:true});
+            try {
+                const currentHabit= get().habits;
+                if(currentHabit.length>0)
+                {
+                    set({
+                        isLoading:false
+                    });
+                    return;
+                }
+
+                await new Promise((resolve)=>setTimeout(resolve,2000));
+    
+            const mockHabits: Habit[] = [
+                {
+                    id: '1',
+                    name: 'Leetcode',
+                    frequency: 'daily',
+                    completedDates: [],
+                    createdAt: new Date().toISOString(),
+                },
+                {
+                    id: '2',
+                    name: 'Jogging',
+                    frequency: 'daily',
+                    completedDates: [],
+                    createdAt: new Date().toISOString(),
+                },
+            ];
+
+            set({ habits: mockHabits, isLoading: false });
+            } catch (error) {
+                set({error:"Failed to fetch habits",isLoading:false})
+            }
         }
     }
     }),{

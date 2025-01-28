@@ -6,7 +6,6 @@ import {
   Grid2 as Grid,
   LinearProgress,
   Paper,
-  styled,
   Typography,
 } from "@mui/material";
 
