@@ -1,8 +1,8 @@
-import { Box, Container, Typography } from "@mui/material";
-import useHabitStore from "./store/store";
-import AddHabitForm from "./components/AddHabitForm";
-import HabitList from "./components/HabitList";
-import { useEffect } from "react";
+import { Box, Container, Typography } from '@mui/material';
+import useHabitStore from './store/store';
+import AddHabitForm from './components/AddHabitForm';
+import HabitList from './components/HabitList';
+import { useEffect } from 'react';
 
 function App() {
   const { fetchHabits } = useHabitStore();
@@ -12,8 +12,8 @@ function App() {
   return (
     <Container>
       <Box mb={10}>
-        <Typography variant="h2" component="h1" align="center">
-          Habbit Tracker
+        <Typography variant='h1' component='h1' align='center' color='primary'>
+          StreakKeeper
         </Typography>
         <AddHabitForm />
       </Box>
