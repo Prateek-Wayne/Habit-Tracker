@@ -18,4 +18,4 @@ jobs:
         with:
           node-version: "20"
       - run: yarn install
-      - run: CI=false yarn build
+      - run: $env:CI="false"; yarn build
