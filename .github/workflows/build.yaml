@@ -1,13 +1,14 @@
 name: streakkeeperBuild
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
       - "prateek/**"
 jobs:
   creates_build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
