@@ -1,3 +1,4 @@
+import { stat } from "fs";
 import { create } from "zustand";
 
 export interface Habit{
@@ -10,12 +11,30 @@ export interface Habit{
 }
 
 interface HabitStore{
-    habits:Habit[]
+    habits:Habit[];
+    addHabit:(name:string,frequency:"daily"|"weekly")=>void;
 }
 
 const useHabitStore=create<HabitStore>()((set,get)=>{
 return {
-    habits:[]
+    habits:[],
+    addHabit:(name,frequency)=>{
+        set((state)=>{
+            return{
+            habits:[
+              ...state.habits,
+              {
+                id:Date.now().toString(),
+                name,
+                frequency,
+                completedDates:[],
+                createdAt:new Date().toISOString(),
+            }
+            ]
+            }
+
+        })
+    }
 }
 })
 
