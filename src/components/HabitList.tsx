@@ -9,56 +9,84 @@ import {
   Typography,
 } from "@mui/material";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  ...theme.applyStyles("dark", {
-    backgroundColor: "#1A2027",
-  }),
-}));
 const HabitList = () => {
-  const { habits } = useHabitStore();
+  const { habits, deleteHabit, updateHabit } = useHabitStore();
+  const today = new Date().toISOString().split("T")[0];
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      {habits.map((habit: Habit) => {
-        return (
-          <Paper
-            elevation={2}
-            key={habit.id}
-            sx={{
-              margin: "10px",
-              alignItems: "center",
-            }}
-          >
-            <Grid sx={{ alignItems: "center" }}>
-              <Grid size={12}>
-                <Typography variant="h6">{habit.name}</Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {habit.frequency}
-                </Typography>
+    <Grid container spacing={2} justifyContent="center">
+      {habits.length === 0 ? (
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          sx={{ textAlign: "center", mt: 3 }}
+        >
+          No habits added yet. Start by adding a habit!
+        </Typography>
+      ) : (
+        habits.map((habit: Habit) => {
+          return (
+            <Grid size={12} key={habit.id}>
+              <Paper
+                elevation={2}
+                component={Box}
+                sx={{
+                  margin: "10px",
+                  padding: "10px",
+                  display: "flex",
+                  justifyContent: "space-between",
+
+                  alignItems: "center",
+                }}
+              >
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "flex-end",
+                    flexDirection: "column",
+                    justifyContent: "center",
                     gap: 1,
                     alignItems: "center",
                   }}
                 >
-                  <Button variant="outlined">Mark Complete</Button>
-                  <Button variant="outlined" color="error">
+                  <Typography variant="h6">{habit.name}</Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {habit.frequency}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    variant="outlined"
+                    color={
+                      habit.completedDates.includes(today)
+                        ? "success"
+                        : "primary"
+                    }
+                    onClick={() => {
+                      updateHabit(habit.id, today);
+                    }}
+                  >
+                    Mark Complete
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => deleteHabit(habit.id)}
+                  >
                     Remove
                   </Button>
                 </Box>
-              </Grid>
-              {/* <Grid size={12}></Grid> */}
+              </Paper>
             </Grid>
-          </Paper>
-        );
-      })}
-    </Box>
+          );
+        })
+      )}
+    </Grid>
   );
 };
 
