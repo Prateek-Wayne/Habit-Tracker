@@ -2,6 +2,7 @@ name: deploy my static stire
 run-name: ${{ github.actor }} is Deploying 🚀👩‍🚀
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
