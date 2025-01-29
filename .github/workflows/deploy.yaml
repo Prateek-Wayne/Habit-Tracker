@@ -1,4 +1,4 @@
-name: deploy my site
+name: deploy my static stire
 run-name: ${{ github.actor }} is Deploying 🚀👩‍🚀
 
 on:
