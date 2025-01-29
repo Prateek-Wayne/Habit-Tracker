@@ -12,11 +12,11 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: "20"
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
       - name: Build Project
-        run: npm run build
+        run: CI=false yarn build
       - name: Upload artifact to enable deployment
         uses: actions/upload-artifact@v3
         with:
