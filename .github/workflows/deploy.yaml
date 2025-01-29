@@ -1,24 +1,39 @@
-name: deploy my static stire
-run-name: ${{ github.actor }} is Deploying 🚀👩‍🚀
-
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
-  creates_build:
+  # Build Job
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
         with:
           node-version: "20"
-      - run: yarn install
-      - run: CI=false yarn build
-      - name: Deploying 💢🌠
-        run: CI=false yarn deploy
+      - name: Install Dependencies
+        run: yarn install
+      - name: Build Project
+        run: CI=false yarn build
+      - name: Upload artifact to enable deployment
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-files
+          path: ./dist
+    # Deploy Job
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: production-files
+          path: ./dist
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.CI_CD_TOKEN }}
+          publish_dir: ./dist
