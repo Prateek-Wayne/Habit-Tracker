@@ -1,5 +1,5 @@
 name: streakkeeperBuild
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} is Creating Build
 
 on:
   workflow_dispatch:
@@ -14,14 +14,14 @@ on:
 
 jobs:
   creates_build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
       - run: yarn install
-      - run: $env:CI="false"; yarn build
+      - run: CI=false yarn build
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3
         with:

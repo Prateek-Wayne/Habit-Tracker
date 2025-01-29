@@ -4,20 +4,20 @@ run-name: ${{ github.actor }} is Deploying 🚀👩‍🚀
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   creates_build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
       - run: yarn install
-      - run: $env:CI="false"; yarn build
+      - run: CI=false yarn build
       - name: Deploying 💢🌠
-        run: $env:CI="false"; yarn deploy
+        run: CI=false yarn deploy
