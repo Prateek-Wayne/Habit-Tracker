@@ -21,7 +21,7 @@ interface HabitStore {
 
 const useHabitStore = create<HabitStore>()(
   persist(
-    (set, get) 
+    (set, get) => {
       return {
         habits: [],
         isLoading: false,
