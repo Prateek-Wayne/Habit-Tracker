@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/Habit-Tracker/static/js/main.f8cc883b.js",
+    "static/js/453.23352159.chunk.js": "/Habit-Tracker/static/js/453.23352159.chunk.js",
+    "index.html": "/Habit-Tracker/index.html",
+    "main.f8cc883b.js.map": "/Habit-Tracker/static/js/main.f8cc883b.js.map",
+    "453.23352159.chunk.js.map": "/Habit-Tracker/static/js/453.23352159.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.f8cc883b.js"
+  ]
+}
