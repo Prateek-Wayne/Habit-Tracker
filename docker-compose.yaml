@@ -1,0 +1,10 @@
+services:
+  habit-tracker:
+    build: .
+    image: prateekwayne/habit-tracker:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
